@@ -1,19 +1,28 @@
 import React, { useState } from "react";
 
 function App() {
-	const [name, setName] = useState({ firstName: '', lastName: '' });
+	const [counter, setCounter] = useState(0);
 
-	return (
-		<>
-			<div>
-				First Name : <input type="text" value={name.firstName} onChange={(e) => setName({ ...name, firstName: e.target.value })} />
-			</div>
-			<div>
-				Last Name : <input type="text" value={name.lastName} onChange={(e) => setName({ ...name, lastName: e.target.value })} />
-			</div>
-			<span> {JSON.stringify(name)} </span>
-		</>
-	)
+    const incrementCounter = () => {
+        setCounter((prevCount) => prevCount + 1);
+    }
+    const decrementCounter = () => {
+        setCounter((prevCount) => prevCount - 1);
+    }
+    const incrementFive = () => {
+        for (var i=0; i<5; i++) {
+            setCounter((prevCount) => prevCount + 1);
+        }
+    }
+    
+    return (
+        <>
+            <span> {counter} </span>
+            <button onClick={incrementCounter}> Increment </button>
+            <button onClick={decrementCounter}> Decrement </button>
+            <button onClick={incrementFive}> Increment by 5</button>
+        </>
+    )
 }
 
 export default App;
