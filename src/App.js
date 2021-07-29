@@ -1,21 +1,29 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useReducer } from "react";
 
 function App() {
-    const [timer, setTimer] = useState(0)
-    const timerInstance = useRef();
+    const initialState = 0;
 
+    const reducer = (state, action) => {
+        switch (action) {
+            case 'increment':
+                return state + 1;
+            case 'decrement':
+                return state - 1;
+            case 'reset':
+                return initialState;
+            default:
+                return state;
+        }
+    }
 
-    useEffect(
-        () => {
-            timerInstance.current = setInterval(() => setTimer(prevTimer => prevTimer + 1), 1000)
-            return () => clearInterval(timerInstance.current);
-        }, []
-    )
+    const [counter, dispatch] = useReducer(reducer, initialState);
 
     return (
         <>
-            <div> {timer}</div>
-            <button onClick={() => clearInterval(timerInstance.current)}> Clear Timer</button>
+            <div> Counter  {counter} </div>
+            <button onClick={() => dispatch("increment")}> Increment </button>
+            <button onClick={() => dispatch("decrement")}> Decrement </button>
+            <button onClick={() => dispatch("reset")}> Reset</button>
         </>
     )
 }
