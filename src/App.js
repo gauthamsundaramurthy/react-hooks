@@ -1,23 +1,13 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
+import Cursor from './Cursor';
 
 function App() {
-	const [counter, setCounter] = useState(0);
-
-    const tick = () => {
-        setCounter(prevCounter => prevCounter + 1);
-    }
-
-    useEffect (() => {
-        setInterval ( () => {
-            tick()
-        }, 1000)
-    }, [])
-
-    useEffect(()=> console.log('.. After Rendering ..'))
+	const [display, setDisplay] = useState(true);
 
     return (
         <>
-          <div> {counter} </div>  
+            <button onClick = {() => setDisplay(prevDisplay => !prevDisplay)}> Toggle display </button>
+            {display && <Cursor />}
         </>
     )
 }
