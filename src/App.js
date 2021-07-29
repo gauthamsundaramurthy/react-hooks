@@ -1,24 +1,24 @@
 import React, { useState, useEffect } from "react";
+import axios from 'axios';
 
 function App() {
-	const [counter, setCounter] = useState(0);
+	const [post, setPost] = useState([]);
+    
+    useEffect (
+        () => {
+            axios.get('https://jsonplaceholder.typicode.com/posts')
+            .then (res => setPost(res.data))
+            .catch(err => console.log(err));
+        },[]
+    );
 
-    const tick = () => {
-        setCounter(prevCounter => prevCounter + 1);
-    }
-
-    useEffect (() => {
-        setInterval ( () => {
-            tick()
-        }, 1000)
-    }, [])
-
-    useEffect(()=> console.log('.. After Rendering ..'))
 
     return (
-        <>
-          <div> {counter} </div>  
-        </>
+        <div>
+            <ul> 
+                {post.map(p => <li key={p.id}>{p.title}</li>)}
+            </ul>
+        </div>
     )
 }
 
