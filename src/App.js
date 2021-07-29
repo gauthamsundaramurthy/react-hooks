@@ -1,26 +1,23 @@
 import React, { useState, useEffect } from "react";
 
 function App() {
-	const [x, setX] = useState(0);
-    const [y, setY] = useState(0);
+	const [counter, setCounter] = useState(0);
 
-    const logMousePosition = (e) => {
-        console.log('Mouse Movement Capture')
-        setX(e.clientX);
-        setY(e.clientY);
+    const tick = () => {
+        setCounter(prevCounter => prevCounter + 1);
     }
 
-    useEffect (
-        () => {
-            console.log('React Hooks - useEffect ...')
-            window.addEventListener('mousemove', logMousePosition);   
-        },[]
-    );
+    useEffect (() => {
+        setInterval ( () => {
+            tick()
+        }, 1000)
+    }, [])
 
+    useEffect(()=> console.log('.. After Rendering ..'))
 
     return (
         <>
-            <div> {x} - {y}</div>
+          <div> {counter} </div>  
         </>
     )
 }
