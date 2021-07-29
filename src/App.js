@@ -1,28 +1,26 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
 function App() {
 	const [counter, setCounter] = useState(0);
+	const [name, setName] = useState('')
 
-    const incrementCounter = () => {
-        setCounter((prevCount) => prevCount + 1);
-    }
-    const decrementCounter = () => {
-        setCounter((prevCount) => prevCount - 1);
-    }
-    const incrementFive = () => {
-        for (var i=0; i<5; i++) {
-            setCounter((prevCount) => prevCount + 1);
-        }
-    }
-    
-    return (
-        <>
-            <span> {counter} </span>
-            <button onClick={incrementCounter}> Increment </button>
-            <button onClick={decrementCounter}> Decrement </button>
-            <button onClick={incrementFive}> Increment by 5</button>
-        </>
-    )
+	useEffect(
+		() => {
+			console.log('React Hooks - Updating ...')
+			document.title = `You clicked ${counter} times`
+		}, [counter]
+	);
+
+	const incrementCounter = () => {
+		setCounter(prevCount => prevCount + 1);
+	}
+
+	return (
+		<>
+			<input type="text" value={name} onChange={(e) => setName(e.target.value)} />
+			<button onClick={incrementCounter}> Counter One - {counter} </button>
+		</>
+	)
 }
 
 export default App;
