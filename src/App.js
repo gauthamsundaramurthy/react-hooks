@@ -1,16 +1,21 @@
-import React, { useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef } from "react";
 
 function App() {
-    const inputRef = useRef();
+    const [timer, setTimer] = useState(0)
+    const timerInstance = useRef();
+
 
     useEffect(
-        () => inputRef.current.focus()
-        , []
+        () => {
+            timerInstance.current = setInterval(() => setTimer(prevTimer => prevTimer + 1), 1000)
+            return () => clearInterval(timerInstance.current);
+        }, []
     )
 
     return (
         <>
-            <input type="text" ref={inputRef} />
+            <div> {timer}</div>
+            <button onClick={() => clearInterval(timerInstance.current)}> Clear Timer</button>
         </>
     )
 }
