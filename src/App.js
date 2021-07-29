@@ -1,24 +1,28 @@
-import React, { useState, useEffect } from "react";
-import axios from 'axios';
+import React, { useState } from "react";
+import Title from './Title'
+import Count from './Count'
+import Button from './Button'
 
 function App() {
-	const [post, setPost] = useState([]);
+	const [age, setAge] = useState(25)
+    const [salary, setSalary] = useState(50000)
     
-    useEffect (
-        () => {
-            axios.get('https://jsonplaceholder.typicode.com/posts')
-            .then (res => setPost(res.data))
-            .catch(err => console.log(err));
-        },[]
-    );
+    const incrementAgeCallback = React.useCallback(() => {    
+        setAge(age+1);
+    }, [age]);
 
+    const incrementSalaryCallback = React.useCallback(() => {
+        setSalary(salary+ 1000)
+    }, [salary])
 
     return (
         <div>
-            <ul> 
-                {post.map(p => <li key={p.id}>{p.title}</li>)}
-            </ul>
-        </div>
+            <Title title="Use CallBack"></Title>
+            <Count text="age" count={age} />
+            <Button handler={incrementAgeCallback}>Increment Age</Button>
+            <Count text="salary" count={salary} />
+            <Button handler={incrementSalaryCallback}>Increment Salary</Button>
+        </div>      
     )
 }
 
