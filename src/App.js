@@ -1,24 +1,35 @@
-import React, { useState, useEffect } from "react";
-import axios from 'axios';
+import React, { useState, useMemo } from "react";
 
 function App() {
-	const [post, setPost] = useState([]);
+	const [counterOne, setCounterOne] = useState(0);
+    const [counterTwo, setCounterTwo] = useState(0);
     
-    useEffect (
-        () => {
-            axios.get('https://jsonplaceholder.typicode.com/posts')
-            .then (res => setPost(res.data))
-            .catch(err => console.log(err));
-        },[]
-    );
+    const incrementCounterOne = () => {    
+        setCounterOne(counterOne+1);
+    }
 
+    const incrementCounterTwo = () => {
+        setCounterTwo(counterTwo+ 1);
+    }
 
+    const isEven = useMemo (() => {
+        var i = 0;
+        while(i<1000000000) {
+            i++;
+        }
+        return counterOne % 2 === 0 ? 'Even' : 'Odd';
+    },[counterOne])
+    
     return (
+        <>
         <div>
-            <ul> 
-                {post.map(p => <li key={p.id}>{p.title}</li>)}
-            </ul>
+            <button onClick={incrementCounterOne}> Counter One - {counterOne} </button>
+            <span> {isEven}</span>
+        </div>      
+        <div>
+            <button onClick={incrementCounterTwo}> Counter Two - {counterTwo} </button>
         </div>
+        </>
     )
 }
 
